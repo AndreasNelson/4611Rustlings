@@ -2,8 +2,10 @@
 fn picky_eater(food: &str) -> &str {
     if food == "strawberry" {
         "Yummy!"
+    } else if food == "potato" { // added condition for potato and an else statement to handle disliked foods
+        "I guess I can eat that."
     } else {
-        1
+        "No thanks!"
     }
 }
 
