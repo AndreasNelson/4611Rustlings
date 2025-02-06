@@ -37,18 +37,20 @@ impl Error for CreationError {}
 struct PositiveNonzeroInteger(u64);
 
 impl PositiveNonzeroInteger {
-    fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        match value {
-            x if x < 0 => Err(CreationError::Negative),
-            0 => Err(CreationError::Zero),
-            x => Ok(PositiveNonzeroInteger(x as u64)),
+    fn new(value: i64) -> Result<Self, CreationError> {
+        if value < 0 {
+            Err(CreationError::Negative)
+        } else if value == 0 {
+            Err(CreationError::Zero)
+        } else {
+            Ok(Self(value as u64))
         }
     }
 }
 
 // TODO: Add the correct return type `Result<(), Box<dyn ???>>`. What can we
 // use to describe both errors? Is there a trait which both errors implement?
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
